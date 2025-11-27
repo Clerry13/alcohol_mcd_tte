@@ -5,8 +5,10 @@
 stset timetomcd [pweight=ipw_final], failure(evermcd==1) scale(1)
 
 	*where ipw_final = truncated weights
-	*evermcd==1 = diagnosis of major chronic disease
-	*timetomcd = number of years between baseline and diagnosis of major chronic disease
+	*ever[mcd]==1 = diagnosis of major chronic disease
+	*ever[mcd]==2 = death
+	*timeto[mcd]= number of years between baseline and diagnosis of major chronic disease
+	*[substitute with outcome]
 
 stcrreg i.cgah_new ageatsurvey sex edu marital nutrition bmi alchistory, compete(evermcd==2) tvc(nearestsmk nearestinc nearestphys) texp(_t)
 
@@ -18,20 +20,25 @@ stcrreg i.cgah_new ageatsurvey edu marital nutrition bmi alchistory if sex==2, c
 
 **for cancer
 stset agetocancer [pweight=ipw_final], failure(evercancer==1) scale(1)
+stcrreg i.cgah_new ,compete(evercancer==2)
 stcrreg i.cgah_new ageatsurvey sex edu marital nutrition bmi alchistory, compete(evercancer==2) tvc(nearestsmk nearestinc nearestphys) texp(_t)
 
 **for heart disease
 stset agetoheart [pweight=ipw_final], failure(everheart==1) scale(1)
+stcrreg i.cgah_new ,compete(everheart==2)
 stcrreg i.cgah_new ageatsurvey sex edu marital nutrition bmi alchistory, compete(everheart==2) tvc(nearestsmk nearestinc nearestphys) texp(_t)
 
 **for stroke
 stset agetostroke [pweight=ipw_final], failure(everstroke==1) scale(1)
+stcrreg i.cgah_new ,compete(everstroke==2)
 stcrreg i.cgah_new ageatsurvey sex edu marital nutrition bmi alchistory, compete(everstroke==2) tvc(nearestsmk nearestinc nearestphys) texp(_t)
 
 **for diabetes
 stset agetodiab [pweight=ipw_final], failure(everdiab==1) scale(1)
+stcrreg i.cgah_new ,compete(everdiab==2)
 stcrreg i.cgah_new ageatsurvey sex edu marital nutrition bmi alchistory, compete(everdiab==2) tvc(nearestsmk nearestinc nearestphys) texp(_t)
 
 **for copd
 stset agetocopd [pweight=ipw_final], failure(evercopd==1) scale(1)
+stcrreg i.cgah_new ,compete(evercopd==2)
 stcrreg i.cgah_new ageatsurvey sex edu marital nutrition bmi alchistory, compete(evercopd==2) tvc(nearestsmk nearestinc nearestphys) texp(_t)
